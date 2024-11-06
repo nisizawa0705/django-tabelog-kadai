@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}トップ画面{% endblock %}
+{% block content %}
+<div class="container-fluid py-5 bg-light">
+    <div class="row align-items-center">
+        <!-- テキストブロック -->
+        <div class="col-lg-6 text-center text-lg-start">
+            <h1 class="display-4 fw-bold mb-3">名古屋ならではの味を、<br>見つけよう</h1>
+            <p class="lead">NAGOYAMESHIは、<br>名古屋市のB級グルメ専門のレビューサイトです。</p>
+            <a href="{% url 'storeinfo' %}" class="btn btn-primary btn-lg">店舗一覧を見る</a>
+        </div>
+
+        <!-- 画像ブロック -->
+        <div class="col-lg-6 text-center mt-4 mt-lg-0">
+            <img class="img-fluid rounded shadow-lg" src="{% static 'polls/img/nagoya_Top2.jpg' %}" alt="Nagoya Meshi Top Image">
+        </div>
+    </div>
+</div>
+{% endblock %}

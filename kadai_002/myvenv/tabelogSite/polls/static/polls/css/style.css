@@ -1,0 +1,169 @@
+/*base.html*/
+.navbar navbar-expand-lg navbar-dark bg-primary{
+    display: flex;
+    justify-content: space-between;
+}
+.navbar-brand-title{
+    width: 50%;
+}
+.container-fluid > a{
+    text-decoration: none;
+    margin-left: 20px;
+}
+.container-fluid > a:link{
+    color: #0d0d0d;
+}
+.container-fluid > a:visited{
+    color: #0d0d0d;
+}
+.container-fluid > a:hover{
+    color: #0d0d0d;
+    text-decoration: underline;
+}
+.container-fluid > a:active{
+    color: #0d0d0d;
+}
+.nagoyameshi-logo{
+    width: 3%;
+}
+
+.container{
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+
+/*top.html*/
+.top-div-1{
+    position: relative;
+}
+.top-div-1-1{
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    color: white;
+}
+.top-images1{
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+
+/*storeinfo_list.html*/
+.container_storeinfo_P{
+    display: flex;
+}
+.container_storeinfo_1{
+    margin: 0px 10px 0px 10px;
+}
+.checkbox-list{
+    list-style-type: none; /* リストのマーカー（ドット）を消す */
+    padding: 0;  /* リストの内側の余白をなくす */
+}
+.container_storeinfo_2{
+    margin: 0px 10px 0px 10px;
+}
+.ItemParents{
+    display: flex;
+}
+.ItemLeft{
+    margin: 10px;
+}
+.ItemLeft > img{
+    width: 100px;
+    height: auto;
+}
+.ItemRight{
+    display: block;
+}
+
+/*product_detail.html*/
+/*タブの切り替え機能で使用するCSS*/
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ccc;
+}
+.tab-button {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.tab-button.active {
+    border-bottom: 2px solid blue; /* アクティブなタブのスタイル */
+}
+.tab-content {
+    display: none; /* 初期状態では非表示 */
+    margin: 0 100px 0 100px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.tab-content.active {
+    display: block; /* アクティブなタブのみ表示 */
+}
+.review {
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+/*星の数の表示*/
+.star-rating {
+    direction: rtl;
+    display: inline-block;
+}
+.star-rating-disp {
+    /*レビュー画面の星表示が逆になってしまうためその対策で作成。*/
+    direction: ltr;
+    display: inline-block;
+}
+.star-rating input {
+    display: none;
+}
+.star-rating label {
+    font-size: 30px;
+    color: #ddd;
+    cursor: pointer;
+}
+.star-rating input:checked ~ label {
+    color: #f39c12; /* 選択された星の色 */
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #f39c12; /* ホバー時の星の色 */
+}
+.star {
+    font-size: 30px;
+    color: #ddd; /* デフォルトの星の色 */
+}
+.star.filled {
+    color: #f39c12; /* 塗りつぶされた星の色 */
+}
+.tab-content > ul {
+    list-style-type: none; /* 点を非表示にする */
+    padding: 0; /* パディングをリセット */
+    margin: 0; /* マージンをリセット */
+}
+
+/*product_detail.html その他*/
+#details > img{
+    width: 100%;
+}
+#details_reviews_textArea > textarea{
+    width: 75%;
+    height: 150px; /* 高さも変更可能 */
+}
+
+/*会員登録ページ*/
+.inputPageTemp {
+    margin: 0 100px 0 100px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}

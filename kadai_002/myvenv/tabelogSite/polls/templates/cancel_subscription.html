@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-white text-center">
+            <h2 class="card-title">有料プラン解約</h2>
+        </div>
+        <div class="card-body text-center">
+            <p>有料プランを解約すると以下の特典を受けられなくなります。本当に解約してもよろしいですか？</p>
+            
+            <div class="alert alert-info mt-4">
+                <h5>有料プランの内容</h5>
+                <ul class="list-unstyled">
+                    <!--li>・当日の2時間前までならいつでも予約可能</li -->
+                    <!--li>・店舗をお好きなだけお気に入りに追加可能</li -->
+                    <!--li>・レビューを全件閲覧可能</li -->
+                    <li>・レビューを投稿可能</li>
+                    <li>・月額たったの300円</li>
+                </ul>
+            </div>
+
+            <!-- 解約とキャンセルボタン -->
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">解約する</button>
+                <a href="{% url 'my_page' %}" class="btn btn-secondary ml-3">キャンセル</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

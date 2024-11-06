@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <h2 class="text-center mb-4">クレジットカードを登録</h2>
+            
+            <div class="text-center mb-4 text-danger">
+                <p>テストカード(Visa)：4242424242424242</p>
+                <p>テストカード(Mastercard)：5555555555554444</p>
+                <p>テストカード(JCB)：3566002020360505</p>
+            </div>
+            
+            <form action="{% url 'creditcard_create' %}" method="POST" id="payment-form">
+                {% csrf_token %}
+                
+                <!-- フォーム入力 -->
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+
+                <!-- Stripe Elements -->
+                <div class="mb-3">
+                    <label for="card-element" class="form-label">カード情報</label>
+                    <div id="card-element" class="form-control py-2"></div> <!-- カード情報表示 -->
+                </div>
+
+                <!-- エラーメッセージ -->
+                <div id="card-errors" class="text-danger mb-3" role="alert"></div>
+
+                <!-- 送信ボタン -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">カードを登録</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Stripe JSライブラリ -->
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe('{{ stripe_public_key }}');
+    var elements = stripe.elements();
+
+    // カード情報の収集
+    var cardElement = elements.create('card', {
+        style: {
+            base: {
+                iconColor: '#666EE8',
+                color: '#495057',
+                fontWeight: 500,
+                fontFamily: 'Source Code Pro, Consolas, Menlo, monospace',
+                fontSize: '16px',
+                '::placeholder': { color: '#aab7c4' }
+            },
+            invalid: { color: '#fa755a', iconColor: '#fa755a' }
+        }
+    });
+    cardElement.mount('#card-element');
+
+    // フォーム送信の処理
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        stripe.createToken(cardElement).then(function(result) {
+            if (result.error) {
+                var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                stripeTokenHandler(result.token);
+            }
+        });
+    });
+
+    // トークンをフォームに追加して送信
+    function stripeTokenHandler(token) {
+        var form = document.getElementById('payment-form');
+        var hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'card_token');
+        hiddenInput.setAttribute('value', token.id);
+        form.appendChild(hiddenInput);
+        form.submit();
+    }
+</script>
+{% endblock %}

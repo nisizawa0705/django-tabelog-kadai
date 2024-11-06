@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}店舗一覧{% endblock %}
+{% block content %}
+<div class="container my-4">
+    <h1 class="text-center mb-4">店舗一覧</h1>
+
+    <!-- 検索ブロック -->
+    <div class="row mb-4">
+        <div class="col-md-4 offset-md-4">
+            <form method="GET" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="search_word" value="{{ search_word }}" placeholder="店舗名を入力">
+                </div>
+
+                <div class="mb-3">
+                    <label>カテゴリーで絞り込み:</label>
+                    <div class="d-flex flex-wrap">  <!-- フレックスレイアウトで横並び -->
+                        {% for category in categories %}
+                            <div class="form-check me-3">  <!-- チェックボックスを横に並べる -->
+                                <input type="checkbox" class="form-check-input" name="categories" value="{{ category.id }}" 
+                                    {% if category.id|stringformat:"s" in selected_categories %}checked{% endif %}>
+                                <label class="form-check-label">{{ category.name }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center mb-3">
+                    <button type="submit" class="btn btn-primary">検索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 一覧表示ブロック -->
+    <div class="row">
+        {% for storeInfo in object_list %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ storeInfo.img.url }}" class="card-img-top" alt="{{ storeInfo.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ storeInfo.name }}</h5>
+                        <p class="card-text">{{ storeInfo.category }}</p>
+                        <p class="card-text">{{ storeInfo.price_bottom }}円 ~ {{ storeInfo.price_top }}円</p>
+                        <p class="card-text">{{ storeInfo.description|truncatewords:15 }}</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'product_detail' storeInfo.pk %}" class="btn btn-outline-primary">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

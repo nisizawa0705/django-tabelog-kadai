@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- カードレイアウト -->
+            <div class="card shadow-sm border-0" style="background-color: #fff;">
+                <div class="card-header text-center" style="background-color: #f8f9fa; border-bottom: none;">
+                    <h2 class="mb-0" style="color: #333;">予約一覧</h2>
+                </div>
+                <div class="card-body">
+                    <!-- 予約一覧 -->
+                    <ul class="list-group list-group-flush">
+                        {% for reservation in object_list %}
+                        <li class="list-group-item" style="background-color: #fff;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="mb-1"><strong>店舗:</strong> {{ reservation.store_id.name }}</p>
+                                    <p class="mb-1"><strong>予約日時:</strong> {{ reservation.reservation_date }}</p>
+                                    <p class="mb-0"><strong>人数:</strong> {{ reservation.num_people }}</p>
+                                </div>
+                                <a href="{% url 'cancel_reservation' reservation.id %}" class="btn btn-outline-danger btn-sm">キャンセル</a>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

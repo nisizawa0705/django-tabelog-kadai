@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>本当にこのレビューを削除しますか？</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">削除する</button>
+  </form>
+{% endblock %}

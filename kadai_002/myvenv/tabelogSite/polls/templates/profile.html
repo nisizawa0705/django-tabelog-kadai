@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}会員情報{% endblock %}
+{% block content %}
+<div class="inputPageTemp">
+    <h1 class="text-center mb-4">会員情報</h1>
+    <div class="card-body">
+        <h5 class="card-title">基本情報</h5>
+        <p><strong>名前:</strong> {{ user.name }}</p>
+        <p><strong>メールアドレス:</strong> {{ user.email }}</p>
+        <p><strong>郵便番号:</strong> {{ user.postal_number }}</p>
+        <p><strong>住所:</strong> {{ user.address }}</p>
+        <p><strong>電話番号:</strong> {{ user.phone_number }}</p>
+        <p><strong>会員ステータス:</strong> {{ user.member_status }}</p>
+    </div>
+
+    <div class="mt-4 d-flex flex-wrap gap-3">
+        <a href="{% url 'edit_profile' %}" class="btn btn-outline-primary">編集</a><br>
+        
+        <!-- 無料会員の場合 -->
+        {% if user.member_status.id == 1 %}
+            <a href="{% url 'creditcard_create' %}" class="btn btn-outline-success">アップグレード</a>
+        {% endif %}
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="{% url 'password_reset' %}" class="link-secondary">パスワード変更</a>
+    </div>
+</div>
+{% endblock %}
