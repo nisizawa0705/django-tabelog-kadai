@@ -42,19 +42,7 @@ class StoreInfoAdmin(admin.ModelAdmin):
 
     # フィールドの編集ができないものを指定（update_dateを含む）
     readonly_fields = ('created_date', 'update_date')
-
-    def save_model(self, request, obj, form, change):
-        import logging
-        logger = logging.getLogger(__name__)
-        super().save_model(request, obj, form, change)  # 先にオブジェクトを保存
-        
-        # objのイメージフィールドのパスを取得
-        if obj.img:  # ここでimage_fieldは実際のフィールド名に置き換えてください
-            image_path = obj.img.url  # URLを取得
-            logger.debug("イメージフィールドのパス: %s", image_path)
-        else:
-            logger.debug("イメージフィールドが設定されていません。")
-
+    
 
 # 【カテゴリ情報】
 class CategoryAdmin(admin.ModelAdmin):
