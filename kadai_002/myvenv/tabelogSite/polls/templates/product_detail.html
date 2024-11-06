@@ -58,25 +58,27 @@
                 </table>
             </div>
             
-            <div class="d-flex justify-content-center gap-3 mb-2">
-                <!-- お気に入りボタン -->
-                {% if user.is_authenticated %}
+            {% if user.member_status.id == 2 %}
+                <div class="d-flex justify-content-center gap-3 mb-2">
+                    <!-- お気に入りボタン -->
+                    {% if user.is_authenticated %}
+                        <div class="text-center mb-4">
+                            <form method="POST" action="{% url 'add_favorite' storeInfo.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn {% if is_favorite %}btn-danger{% else %}btn-outline-primary{% endif %}">
+                                    {% if is_favorite %}
+                                        お気に入り解除
+                                    {% else %}
+                                        お気に入りに追加
+                                    {% endif %}
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
                     <div class="text-center mb-4">
-                        <form method="POST" action="{% url 'add_favorite' storeInfo.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn {% if is_favorite %}btn-danger{% else %}btn-outline-primary{% endif %}">
-                                {% if is_favorite %}
-                                    お気に入り解除
-                                {% else %}
-                                    お気に入りに追加
-                                {% endif %}
-                            </button>
-                        </form>
+                        <a href="{% url 'create_reservation' storeInfo.id %}" class="btn btn-outline-info">予約</a>
                     </div>
                 {% endif %}
-                <div class="text-center mb-4">
-                    <a href="{% url 'create_reservation' storeInfo.id %}" class="btn btn-outline-info">予約</a>
-                </div>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+ {% extends "base.html" %}
 
 {% block content %}
 <div class="inputPageTemp">
@@ -8,7 +8,6 @@
             <h2 class="mb-3">{{ user.name }} 様</h2>
             <div class="d-flex flex-wrap gap-3">
                 <a href="{% url 'profile' %}" class="btn btn-outline-primary">会員情報</a>
-                <a href="{% url 'reservation_list' %}" class="btn btn-outline-info">予約一覧</a>
 
                 <!-- 無料会員の場合 -->
                 {% if user.member_status.id == 1 %}
@@ -18,6 +17,7 @@
                 <!-- 有料会員の場合 -->
                 {% if user.member_status.id == 2 %}
                     {% if cards %}
+                        <a href="{% url 'reservation_list' %}" class="btn btn-outline-info">予約一覧</a>
                         <a href="{% url 'creditcard_update' pk=cards.first.id %}" class="btn btn-outline-success">お支払方法</a>
                         <a href="{% url 'creditcard_confirm_delete' pk=cards.first.id %}" class="btn btn-outline-danger">有料プランを解約</a>
                     {% endif %}
@@ -26,30 +26,32 @@
         </div>
     </div>
 
-    <!-- お気に入り店舗リスト -->
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="mb-3">お気に入り店舗リスト</h2>
-            <ul class="list-group">
-                {% if favorites %}
-                    {% for favorite in favorites %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <!-- 店舗名リンク -->
-                            <a href="{% url 'product_detail' favorite.store_id.id %}" class="text-decoration-none text-dark">
-                                {{ favorite.store_id.name }}
-                            </a>
-                            <!-- お気に入り解除ボタン -->
-                            <form method="POST" action="{% url 'add_favorite' favorite.store_id.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-sm btn-outline-danger">お気に入り解除</button>
-                            </form>
-                        </li>
-                    {% endfor %}
-                {% else %}
-                    <li class="list-group-item">お気に入りはありません。</li>
-                {% endif %}
-            </ul>
+    {% if user.member_status.id == 2 %}
+        <!-- お気に入り店舗リスト -->
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">お気に入り店舗リスト</h2>
+                <ul class="list-group">
+                    {% if favorites %}
+                        {% for favorite in favorites %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <!-- 店舗名リンク -->
+                                <a href="{% url 'product_detail' favorite.store_id.id %}" class="text-decoration-none text-dark">
+                                    {{ favorite.store_id.name }}
+                                </a>
+                                <!-- お気に入り解除ボタン -->
+                                <form method="POST" action="{% url 'add_favorite' favorite.store_id.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">お気に入り解除</button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item">お気に入りはありません。</li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-    </div>
+    {% endif %}
 </div>
 {% endblock %}
