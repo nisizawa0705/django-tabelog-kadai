@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0" style="background-color: #fff;">
+                <div class="card-header text-center" style="background-color: #f8f9fa; border-bottom: none;">
+                    <h2 class="mb-0" style="color: #333;">予約を作成</h2>
+                </div>
+                <div class="card-body">
+                    <p class="text-center lead mb-4" style="color: #555;">店舗: <strong>{{ store.name }}</strong></p>
+
+                    <!-- フォーム全体に関するエラーメッセージの表示 -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- フォーム部分 -->
+                    <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        
+                        <!-- フォームフィールドの表示（個別のエラーメッセージ対応） -->
+                        <div class="form-group mb-3">
+                            {{ form.reservation_date.label_tag }}
+                            {{ form.reservation_date }}
+                            <!-- 各フィールドのエラーを表示 -->
+                            {% if form.reservation_date.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ form.reservation_date.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 他のフォームフィールドも同様に表示可能 -->
+                        <div class="form-group mb-3">
+                            {{ form.num_people.label_tag }}
+                            {{ form.num_people }}
+                            {% if form.num_people.errors %}
+                                <div class="alert alert-danger mt-2">
+                                    {{ form.num_people.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- ボタンのスタイルを調整 -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-outline-primary btn-lg">予約する</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

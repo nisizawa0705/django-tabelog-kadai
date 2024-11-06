@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}仮登録完了{% endblock %}
+{% block style %}<link rel="stylesheet" href="{% static 'polls/css/style.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body text-center">
+            <h1 class="card-title">仮登録が完了しました。</h1>
+            <p class="card-text">ご登録いただきありがとうございます。<br>メールアドレスの確認のために、送信されたメールのリンクをクリックしてください。</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">ログインページへ</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

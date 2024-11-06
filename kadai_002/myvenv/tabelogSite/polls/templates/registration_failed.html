@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}認証失敗{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">メール認証に失敗しました</h4>
+        <p>リンクが無効であるか、期限が切れている可能性があります。</p>
+        <hr>
+        <p class="mb-0">再度登録をお試しいただくか、問題が解決しない場合はお問い合わせください。</p>
+    </div>
+    <div class="text-center mt-3">
+        <a href="{% url 'member_registration' %}" class="btn btn-outline-primary">会員登録ページに戻る</a>
+    </div>
+</div>
+{% endblock %}

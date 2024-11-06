@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}登録完了{% endblock %}
+{% block style %}<link rel="stylesheet" href="{% static 'polls/css/style.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body text-center">
+            <h2 class="card-title mb-4">本登録が完了しました</h2>
+            <p class="lead">会員登録ありがとうございます。</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">ログインページへ</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
