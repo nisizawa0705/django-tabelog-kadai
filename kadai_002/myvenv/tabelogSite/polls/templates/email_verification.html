@@ -1,26 +1,15 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>メールアドレス確認</title>
-</head>
-<body style="font-family: Arial, sans-serif; background-color: #f7f7f7; color: #333; padding: 20px;">
-    <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h2 style="color: #333;">{{ user.name }}さん、会員登録ありがとうございます！</h2>
-        
-        <p>以下のボタンをクリックして、メールアドレスを確認してください。</p>
+メールアドレス確認
 
-        <p style="text-align: center; margin: 30px 0;">
-            <a href="{{ verification_url }}" style="padding: 12px 24px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">メールアドレスを確認する</a>
-        </p>
-        
-        <p>このリンクは24時間有効です。それ以降は再度登録を行ってください。</p>
+{{ user.name }}さん、会員登録ありがとうございます！
 
-        <p>このメールに覚えがない場合、何も操作は不要です。</p>
         
-        <hr>
-        
-        <p style="font-size: 0.9em; color: #666;">&copy; {{ current_year }} NAGOYAMESHI. All rights reserved.</p>
-    </div>
-</body>
-</html>
+以下のボタンをクリックして、メールアドレスを確認してください。
+
+{{ verification_url }}
+
+このリンクは24時間有効です。それ以降は再度登録を行ってください。
+
+このメールに覚えがない場合、何も操作は不要です。
+
+
+{{ current_year }} NAGOYAMESHI. All rights reserved.

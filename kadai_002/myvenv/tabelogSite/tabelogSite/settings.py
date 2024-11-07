@@ -10,17 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / '.env')  # BASE_DIR / '.env' の形で読み込み
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3g07i$qd%$p9wk-+0w2zd3i4u82cshlb%vu7jx&$^7_20#0o%g'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Falseにすることで、処理のエラー時に開発環境では表示された黄色い画面が表示されなくなる
@@ -154,25 +159,23 @@ AUTH_USER_MODEL = 'polls.MemberInfo'
 CSRF_COOKIE_SECURE = True  # HTTPSを使用している場合はTrueに設定
 
 # メール設定(パスワードの再設定機能に必要)
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"    #デバッグ
-EMAIL_HOST = 'smtp.mail.me.com'  # 使用するSMTPサーバー
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend" 
+# EMAIL_HOST = 'smtp.mail.me.com'  # 使用するSMTPサーバー
+EMAIL_HOST = 'smtp.gmail.com'  # GmailのSMTPサーバー
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'nisasi00tomo@icloud.com'
-EMAIL_HOST_PASSWORD = 'tabelog!'
-
-DOMAIN_NAME = 'http://127.0.0.1:8000'  # あなたのドメインに置き換えてください
+# EMAIL_HOST_USER = 'nisasi00tomo@ae.auone-net.jp'
+EMAIL_HOST_USER = 'nisasi00tomo@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  #アプリケーションパスワードを設定
 
 # Stripe関連設定
 # Stripeサイトで得た公開鍵と秘密鍵を入力する。
 # 公開可能キー
-STRIPE_PUBLIC_KEY = 'pk_test_51Q8biIAQCqVN5vSTkqWSp30DEu1pe7BszFkUHPyty1rKyQy6X9hZbErnBoXN0xzzEGWW3ujFCBVMeI6SiFwQUZ6A00AKFdpDr5'
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
 # 取得済みのシークレットキー
-STRIPE_SECRET_KEY = 'sk_test_51Q8biIAQCqVN5vSTbf0CUOnuqKELs3BTDu9WYMKRiSjw2MRpA4DGUySXU0FBLrwNIdyXftsy4iM8RsSHkJaroCND00fRPXjq9W'
-# Stripeダッシュボードから取得した価格ID
-#　STRIPE_PRICE_ID = 'prod_R0d59SEDHVHzMX'
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 # プランID
-STRIPE_PLAN_ID = 'price_1Q8bpcAQCqVN5vSToa47TgvT'  # ここにStripeのプランIDを設定
+STRIPE_PLAN_ID = env('STRIPE_PLAN_ID')
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
@@ -196,16 +199,17 @@ if "TZ2101-013" in hostname:
     }
     # すべてのホストからのアクセスを許可
     ALLOWED_HOSTS = ['*'] 
+
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"    #デバッグ
+
+    DOMAIN_NAME = 'http://127.0.0.1:8000'  # あなたのドメインに置き換えてください
 else:
     # 本番環境
     DEBUG = True
 
     import dj_database_url
-    import os
 
     #▼▼▼ここからS3関連▼▼▼
-    from pathlib import Path
-
     # S3バケットの設定
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
@@ -238,3 +242,5 @@ else:
     }
     # DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
     ALLOWED_HOSTS = ['*']
+
+    DOMAIN_NAME = 'https://tabelog-site-ccebbf44c02d.herokuapp.com/'  # あなたのドメインに置き換えてください
