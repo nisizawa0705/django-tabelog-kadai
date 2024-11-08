@@ -4,6 +4,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth import get_user_model
 
+import boto3
+
 #会員ステータス(有料 or 無料)
 class MemberStatus(models.Model):
     name = models.CharField(max_length=200)
@@ -130,6 +132,30 @@ class StoreInfo(models.Model):
     phone_number = models.CharField(max_length=15)
     created_date = models.DateTimeField(default=timezone.now)
     update_date = models.DateTimeField(blank=True, null=True, auto_now=True)
+
+    from django.core.files.storage import default_storage
+
+    #AmazonS3へのアップロード
+    def save(self, *args, **kwargs):
+        try:
+            print(f"Before save: img.name = {self.img.name}")
+            super().save(*args, **kwargs)
+            print(f"After save: img.name = {self.img.name}")
+            
+            if self.img:
+                print(f"Image URL: {self.img.url}")
+
+                # 明示的に S3 へアップロードする。
+                s3 = boto3.client('s3')
+                bucket_name = 'tabelog-site'
+                file_path = f"{self.img.name}"
+                
+                with self.img.open() as f:
+                    s3.upload_fileobj(f, bucket_name, file_path)
+                    print(f"Explicit upload successful: {file_path}")
+
+        except Exception as e:
+            print(f"Error during save: {e}")
 
     class Meta:
         verbose_name = "店舗"  # 単数形の表示名

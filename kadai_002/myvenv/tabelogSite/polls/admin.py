@@ -3,8 +3,8 @@ from .models import MemberInfo,MemberStatus,Category,StoreInfo,StoreReview,Fabor
 
 
 #admin.site.register(MemberStatus)
-#admin.site.register(Subscription)
-#admin.site.register(CreditCard)
+admin.site.register(Subscription)
+admin.site.register(CreditCard)
 admin.site.register(CompanyInfo)
 
 

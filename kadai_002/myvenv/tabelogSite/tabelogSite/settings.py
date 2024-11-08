@@ -180,6 +180,30 @@ STRIPE_PLAN_ID = env('STRIPE_PLAN_ID')
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+
+#▼▼▼ここからS3関連▼▼▼
+# S3バケットの設定
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = 'us-east-2'  # S3のリージョンを指定
+AWS_S3_ENDPOINT_URL = 'https://s3.us-east-2.amazonaws.com'  #エンドポイントを明示的に指定
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+# メディアファイルの保存先をS3に変更
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/'
+
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+# import logging
+# logging.basicConfig(level=logging.DEBUG)
+
+#▲▲▲ここまでS3関連▲▲▲
+
 from socket import gethostname
 hostname = gethostname()
 
@@ -209,29 +233,6 @@ else:
 
     import dj_database_url
 
-    #▼▼▼ここからS3関連▼▼▼
-    # S3バケットの設定
-    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-    AWS_S3_REGION_NAME = 'us-east-2'  # S3のリージョンを指定
-    AWS_S3_SIGNATURE_VERSION = 's3v4'
-
-    # メディアファイルの保存先をS3に変更
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
-    MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com/'
-    #S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-    #MEDIA_URL = S3_URL
-
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_DEFAULT_ACL = None
-
-    # その他の設定
-    MEDIA_ROOT = None  # ローカル保存は無効化
-
-    #▲▲▲ここまでS3関連▲▲▲
-
     # データベース接続情報を一時的に保存(デバックなどに利用する用)
     db_from_env = dj_database_url.config()
     DATABASES = {
@@ -243,4 +244,4 @@ else:
     # DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
     ALLOWED_HOSTS = ['*']
 
-    DOMAIN_NAME = 'https://tabelog-site-ccebbf44c02d.herokuapp.com/'  # あなたのドメインに置き換えてください
+    DOMAIN_NAME = 'https://tabelog-site-ccebbf44c02d.herokuapp.com'  # あなたのドメインに置き換えてください

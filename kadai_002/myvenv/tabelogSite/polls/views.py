@@ -187,7 +187,6 @@ class MemberRegistrationView(CreateView):
         send_verification_email(user)
         
         # フォームが有効な場合の処理を継承元に委ねる
-        #return super().form_valid(form)
         return redirect(self.success_url)
 
 # メール認証用のURLにアクセスした際にユーザーを有効化する処理。
