@@ -6,6 +6,7 @@ class EmailBackend(ModelBackend):
     """
     カスタム認証バックエンド。
     メールアドレスとパスワードでログインできるようにする。
+    ログインビューで呼び出される。
     """
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
